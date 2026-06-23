@@ -36,6 +36,8 @@ body {
   color: var(--text);
   background: var(--bg);
   min-height: 100vh;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 /* ==============================================================
@@ -45,6 +47,7 @@ body {
   display: grid;
   grid-template-columns: 220px 1fr;
   min-height: 100vh;
+  min-width: 960px;
 }
 
 /* ==============================================================
@@ -192,6 +195,8 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow-x: auto;
+  overflow-y: auto;
 }
 
 /* Top Bar */
@@ -285,6 +290,7 @@ body {
 .table-container {
   padding: 20px 24px;
   overflow-y: auto;
+  overflow-x: auto;
   min-width: 0;
 }
 
@@ -353,6 +359,7 @@ body {
 /* Model Table */
 .model-table {
   width: 100%;
+  min-width: 700px;
   border-collapse: collapse;
   background: var(--surface);
   border-radius: var(--radius-lg);
@@ -836,7 +843,7 @@ body {
 
 .section-panel-inner {
   padding: 24px;
-  max-width: 1100px;
+  min-width: 600px;
 }
 
 /* content-body-inner: table + detail for Models section */
@@ -850,6 +857,8 @@ body {
 .content-body-inner .table-container {
   padding: 20px 24px;
   overflow-y: auto;
+  overflow-x: auto;
+  min-width: 0;
 }
 
 /* Section Hero */
@@ -989,35 +998,15 @@ body {
 
 /* ==============================================================
    RESPONSIVE
+   Narrow viewports: keep layout intact, enable horizontal scroll.
    ============================================================== */
 @media (max-width: 1200px) {
-  .content-body-inner, .content-body {
-    grid-template-columns: 1fr;
-  }
-  .detail-panel {
-    position: static;
-    height: auto;
-    border-left: none;
-    border-top: 1px solid var(--border);
-  }
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .app-layout {
-    grid-template-columns: 1fr;
-  }
-  .sidebar {
-    position: static;
-    height: auto;
-    flex-direction: row;
-    overflow-x: auto;
-  }
-  .sidebar-nav {
-    flex-direction: row;
-  }
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
