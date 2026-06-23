@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Backend Operator Console — femalebackend-mvp-v1</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app-layout">
+
+    <!-- ============================================================
+      LEFT SIDEBAR — ALL ITEMS CLICKABLE
+      ============================================================ -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">✦</span>
+        <div>
+          <strong>Female Operator</strong>
+          <small>Backend Console</small>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item" data-section="dashboard" onclick="switchSection('dashboard', this)">
+          <span class="nav-icon">◫</span> Dashboard
+        </a>
+        <a class="nav-item active" data-section="models" onclick="switchSection('models', this)">
+          <span class="nav-icon">👩</span> Models
+          <span class="nav-badge">4</span>
+        </a>
+        <a class="nav-item" data-section="persona" onclick="switchSection('persona', this)">
+          <span class="nav-icon">🧠</span> Persona & LBS
+        </a>
+        <a class="nav-item" data-section="assets" onclick="switchSection('assets', this)">
+          <span class="nav-icon">📦</span> Assets
+          <span class="nav-badge">13</span>
+        </a>
+        <a class="nav-item" data-section="operators" onclick="switchSection('operators', this)">
+          <span class="nav-icon">👥</span> Operators
+        </a>
+        <a class="nav-item" data-section="strategy" onclick="switchSection('strategy', this)">
+          <span class="nav-icon">♟</span> Strategy
+        </a>
+        <a class="nav-item" data-section="routing" onclick="switchSection('routing', this)">
+          <span class="nav-icon">↗</span> Routing
+        </a>
+        <a class="nav-item" data-section="income" onclick="switchSection('income', this)">
+          <span class="nav-icon">💰</span> Income
+        </a>
+        <a class="nav-item" data-section="rating" onclick="switchSection('rating', this)">
+          <span class="nav-icon">⭐</span> Rating
+        </a>
+        <a class="nav-item" data-section="publish" onclick="switchSection('publish', this)">
+          <span class="nav-icon">🚀</span> Publish
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=60&q=80" alt="">
+          <div>
+            <strong>admin</strong>
+            <small>Super Admin</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============================================================
+      MAIN CONTENT AREA
+      ============================================================ -->
+    <div class="main-area">
+
+      <!-- TOP BAR — dynamic title -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 id="topbarTitle">Models</h1>
+          <span class="breadcrumb" id="topbarBreadcrumb">Backend Console / Models</span>
+        </div>
+        <div class="topbar-actions" id="topbarActions">
+          <!-- populated dynamically per section -->
+        </div>
+      </header>
+
+      <div class="content-body">
+
+        <!-- ======================================================
+          PANEL: DASHBOARD
+          ====================================================== -->
+        <div class="section-panel" id="panel-dashboard" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Dashboard</h2>
+              <p>System overview and key metrics at a glance.</p>
+            </div>
+            <div class="dashboard-grid">
+              <div class="dash-card"><em>Published Models</em><strong>3</strong><small>3 of 4 live</small></div>
+              <div class="dash-card"><em>Draft Models</em><strong>1</strong><small>Noor — pending</small></div>
+              <div class="dash-card"><em>Active Operators</em><strong>2</strong><small>Online now</small></div>
+              <div class="dash-card"><em>Total Assets</em><strong>13</strong><small>Across all models</small></div>
+              <div class="dash-card"><em>This Week Revenue</em><strong>💎 5,656</strong><small>≈ $4.47</small></div>
+              <div class="dash-card"><em>Pending Deploy</em><strong>6</strong><small>Config files empty</small></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: MODELS (default)
+          ====================================================== -->
+        <div class="section-panel active" id="panel-models">
+          <!-- INLINE TABLE + RIGHT PANEL (same as before) -->
+          <div class="content-body-inner">
+            <div class="table-container">
+              <div class="table-header-bar">
+                <div class="table-search">
+                  <span class="search-icon">🔍</span>
+                  <input type="text" placeholder="Search models..." />
+                </div>
+                <div class="table-filters">
+                  <select><option>All Status</option><option>Published</option><option>Draft</option></select>
+                  <select><option>All Priority</option><option>High</option><option>New</option><option>Risk</option></select>
+                </div>
+                <span class="table-count">4 models</span>
+              </div>
+
+              <table class="model-table">
+                <thead>
+                  <tr>
+                    <th class="col-check"><input type="checkbox" /></th>
+                    <th class="col-model">Model</th>
+                    <th class="col-persona">Persona</th>
+                    <th class="col-lbs">LBS Zone</th>
+                    <th class="col-status">Status</th>
+                    <th class="col-action">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="model-table-row" data-model="m1" onclick="selectModelRow(this)">
+                    <td class="col-check"><input type="checkbox" onclick="event.stopPropagation()" /></td>
+                    <td class="col-model">
+                      <div class="model-cell">
+                        <img class="model-cell-avatar" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=80&q=80" alt="Zayna" />
+                        <div class="model-cell-info"><strong>Zayna</strong><small>24 · Dubai, UAE</small></div>
+                      </div>
+                    </td>
+                    <td class="col-persona"><span class="persona-text">Warm, playful, loves coffee and late-night chats. Gentle tone, short replies, light emoji usage.</span></td>
+                    <td class="col-lbs"><span class="lbs-tag">Dubai Marina</span></td>
+                    <td class="col-status"><span class="status-badge published">Published</span></td>
+                    <td class="col-action"><button class="edit-btn" onclick="event.stopPropagation();selectModelRow(this.closest('tr'))">Edit</button></td>
+                  </tr>
+                  <tr class="model-table-row" data-model="m2" onclick="selectModelRow(this)">
+                    <td class="col-check"><input type="checkbox" onclick="event.stopPropagation()" /></td>
+                    <td class="col-model">
+                      <div class="model-cell">
+                        <img class="model-cell-avatar" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=80&q=80" alt="Lina" />
+                        <div class="model-cell-info"><strong>Lina</strong><small>26 · Riyadh, Saudi Arabia</small></div>
+                      </div>
+                    </td>
+                    <td class="col-persona"><span class="persona-text">Mature and calm. Likes music, travel, and quiet calls. Low emoji usage, suitable for VIP care.</span></td>
+                    <td class="col-lbs"><span class="lbs-tag">Riyadh Center</span></td>
+                    <td class="col-status"><span class="status-badge published">Published</span></td>
+                    <td class="col-action"><button class="edit-btn" onclick="event.stopPropagation();selectModelRow(this.closest('tr'))">Edit</button></td>
+                  </tr>
+                  <tr class="model-table-row" data-model="m3" onclick="selectModelRow(this)">
+                    <td class="col-check"><input type="checkbox" onclick="event.stopPropagation()" /></td>
+                    <td class="col-model">
+                      <div class="model-cell">
+                        <img class="model-cell-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="Noor" />
+                        <div class="model-cell-info"><strong>Noor</strong><small>23 · Doha, Qatar</small></div>
+                      </div>
+                    </td>
+                    <td class="col-persona"><span class="persona-text">Shy but responsive. Short warm answers, ask light questions, avoid hard selling.</span></td>
+                    <td class="col-lbs"><span class="lbs-tag">Doha West Bay</span></td>
+                    <td class="col-status"><span class="status-badge draft">Draft</span></td>
+                    <td class="col-action"><button class="edit-btn" onclick="event.stopPropagation();selectModelRow(this.closest('tr'))">Edit</button></td>
+                  </tr>
+                  <tr class="model-table-row" data-model="m4" onclick="selectModelRow(this)">
+                    <td class="col-check"><input type="checkbox" onclick="event.stopPropagation()" /></td>
+                    <td class="col-model">
+                      <div class="model-cell">
+                        <img class="model-cell-avatar" src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=80&q=80" alt="Maya" />
+                        <div class="model-cell-info"><strong>Maya</strong><small>25 · Kuwait City, Kuwait</small></div>
+                      </div>
+                    </td>
+                    <td class="col-persona"><span class="persona-text">Confident, stylish, good at private content conversion. Direct but warm tone.</span></td>
+                    <td class="col-lbs"><span class="lbs-tag">Salmiya</span></td>
+                    <td class="col-status"><span class="status-badge published">Published</span></td>
+                    <td class="col-action"><button class="edit-btn" onclick="event.stopPropagation();selectModelRow(this.closest('tr'))">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="table-footer">
+                <span class="showing">Showing 4 of 4 models</span>
+                <div class="pagination">
+                  <button class="page-btn" disabled>‹</button>
+                  <button class="page-btn active">1</button>
+                  <button class="page-btn" disabled>›</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right detail panel for Models section -->
+            <aside class="detail-panel" id="detailPanel">
+              <div class="detail-placeholder" id="detailPlaceholder">
+                <div class="placeholder-icon">👩</div>
+                <h3>Select a Model</h3>
+                <p>Click a row in the table to view and edit model details.</p>
+              </div>
+              <div class="detail-content" id="detailContent" style="display:none;">
+                <div class="detail-header">
+                  <div class="detail-model-top">
+                    <img id="detailAvatar" class="detail-avatar-lg" src="" alt="" />
+                    <div><h2 id="detailName"></h2><p id="detailLocation"></p></div>
+                  </div>
+                  <span id="detailStatus" class="status-badge published" style="margin-top:12px;display:inline-flex;"></span>
+                </div>
+                <div class="detail-tabs">
+                  <button class="detail-tab active" onclick="switchDetailTab(this, 'profile')">Profile</button>
+                  <button class="detail-tab" onclick="switchDetailTab(this, 'persona')">Persona</button>
+                  <button class="detail-tab" onclick="switchDetailTab(this, 'assets')">Assets</button>
+                  <button class="detail-tab" onclick="switchDetailTab(this, 'schedule')">Schedule</button>
+                </div>
+                <div class="detail-tab-content active" id="tab-profile">
+                  <div class="detail-field"><label>Model ID</label><input type="text" id="fieldId" value="M100234" readonly /></div>
+                  <div class="detail-field"><label>Name</label><input type="text" id="fieldName" value="Zayna" /></div>
+                  <div class="detail-row">
+                    <div class="detail-field"><label>Age</label><input type="number" id="fieldAge" value="24" /></div>
+                    <div class="detail-field"><label>Grade</label><select id="fieldGrade"><option>A+</option><option>A</option><option>B+</option><option>C</option></select></div>
+                  </div>
+                  <div class="detail-field"><label>Country</label><select id="fieldCountry"><option>UAE</option><option>Saudi Arabia</option><option>Qatar</option><option>Kuwait</option><option>Bahrain</option><option>Oman</option></select></div>
+                  <div class="detail-field"><label>City</label><input type="text" id="fieldCity" value="Dubai" /></div>
+                  <div class="detail-field"><label>Avatar URL</label><input type="text" id="fieldAvatar" value="" /></div>
+                </div>
+                <div class="detail-tab-content" id="tab-persona">
+                  <div class="detail-field"><label>Persona Description</label><textarea id="fieldPersona" rows="4"></textarea></div>
+                  <div class="detail-field"><label>Voice Style</label><input type="text" id="fieldVoice" /></div>
+                  <div class="detail-field"><label>Tags</label><input type="text" id="fieldTags" /></div>
+                </div>
+                <div class="detail-tab-content" id="tab-assets">
+                  <div class="asset-mini-list" id="assetMiniList"></div>
+                </div>
+                <div class="detail-tab-content" id="tab-schedule">
+                  <div class="detail-field"><label>Peak Coverage</label><input type="text" id="fieldCoverage" readonly /></div>
+                  <div class="detail-field"><label>Scheduled Time</label><input type="text" id="fieldScheduled" readonly /></div>
+                  <div class="detail-field"><label>Online Rate Target</label><input type="text" id="fieldRateTarget" /></div>
+                </div>
+                <div class="detail-actions">
+                  <button class="detail-btn primary">Save Draft</button>
+                  <button class="detail-btn publish">Publish</button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: PERSONA & LBS
+          ====================================================== -->
+        <div class="section-panel" id="panel-persona" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Persona & LBS</h2>
+              <p>Manage model personas, voice styles, and location-based service zones.</p>
+            </div>
+            <table class="model-table">
+              <thead><tr><th>Model</th><th>Persona</th><th>Voice Style</th><th>LBS Zone</th><th>Tags</th><th>Action</th></tr></thead>
+              <tbody id="personaTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: ASSETS
+          ====================================================== -->
+        <div class="section-panel" id="panel-assets" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Assets</h2>
+              <p>Content library — photos, videos, scripts and gift catalog across all models.</p>
+            </div>
+            <div class="table-filters" style="margin-bottom:16px;">
+              <select><option>All Types</option><option>Public Photo</option><option>Private Photo</option><option>Private Video</option><option>Script</option></select>
+              <select><option>All Models</option><option>Zayna</option><option>Lina</option><option>Noor</option><option>Maya</option></select>
+            </div>
+            <table class="model-table">
+              <thead><tr><th>Thumb</th><th>Title</th><th>Type</th><th>Model</th><th>Price</th><th>Sent</th><th>Scenario</th></tr></thead>
+              <tbody id="assetTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: OPERATORS
+          ====================================================== -->
+        <div class="section-panel" id="panel-operators" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Operators</h2>
+              <p>Staff accounts, guild membership, model assignments, and work status.</p>
+            </div>
+            <table class="model-table">
+              <thead><tr><th>Operator</th><th>ID</th><th>Guild</th><th>Market</th><th>Models Assigned</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><div class="model-cell"><img class="model-cell-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=80" /><div class="model-cell-info"><strong>Aisha</strong><small>GCC · Arabic/English</small></div></div></td>
+                  <td>102486</td>
+                  <td>Desert Rose Guild</td>
+                  <td>GCC</td>
+                  <td>4</td>
+                  <td><span class="status-badge published">Online</span></td>
+                  <td><button class="edit-btn">Edit</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: STRATEGY
+          ====================================================== -->
+        <div class="section-panel" id="panel-strategy" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Strategy</h2>
+              <p>Define conversion tactics, engagement rules, and model-tier strategies.</p>
+            </div>
+            <div class="dashboard-grid">
+              <div class="dash-card"><em>Conversion Pipeline</em><strong>Free → Warm → Paywall → Paid</strong><small>4 stages active</small></div>
+              <div class="dash-card"><em>Free Message Limit</em><strong>3</strong><small>per male user</small></div>
+              <div class="dash-card"><em>Timeout Threshold</em><strong>15 min</strong><small>auto-escalation</small></div>
+              <div class="dash-card"><em>Tier Multipliers</em><strong>A+ 1.5× / C 0.7×</strong><small>active</small></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: ROUTING
+          ====================================================== -->
+        <div class="section-panel" id="panel-routing" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Routing</h2>
+              <p>Traffic allocation matrix — model × geo zone weight distribution.</p>
+            </div>
+            <table class="model-table">
+              <thead><tr><th>Model</th><th>UAE</th><th>Saudi</th><th>Qatar</th><th>Kuwait</th><th>Bahrain</th><th>Oman</th><th>Σ</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Zayna</strong></td><td class="editable-cell">35</td><td class="editable-cell">25</td><td class="editable-cell">15</td><td class="editable-cell">5</td><td class="editable-cell">3</td><td class="editable-cell">2</td><td><strong>85</strong></td></tr>
+                <tr><td><strong>Lina</strong></td><td class="editable-cell">20</td><td class="editable-cell">30</td><td class="editable-cell">10</td><td class="editable-cell">5</td><td class="editable-cell">2</td><td class="editable-cell">1</td><td><strong>68</strong></td></tr>
+                <tr><td><strong>Noor</strong></td><td class="editable-cell">5</td><td class="editable-cell">5</td><td class="editable-cell">20</td><td class="editable-cell">5</td><td class="editable-cell">0</td><td class="editable-cell">0</td><td><strong>35</strong></td></tr>
+                <tr><td><strong>Maya</strong></td><td class="editable-cell">10</td><td class="editable-cell">10</td><td class="editable-cell">10</td><td class="editable-cell">25</td><td class="editable-cell">3</td><td class="editable-cell">2</td><td><strong>60</strong></td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:12px;font-size:12px;color:var(--amber);font-weight:700;">⚠ Column totals not equal. Auto-normalize to 100% per column?</div>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: INCOME
+          ====================================================== -->
+        <div class="section-panel" id="panel-income" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Income</h2>
+              <p>Diamond revenue, commission splits, and payout tracking.</p>
+            </div>
+            <div class="dashboard-grid">
+              <div class="dash-card"><em>Total Diamonds</em><strong>💎 54,545,454</strong><small>≈ $43.00</small></div>
+              <div class="dash-card"><em>Chat Revenue</em><strong>💎 1,440</strong><small>12 rewards</small></div>
+              <div class="dash-card"><em>Gift Revenue</em><strong>💎 128</strong><small>3 gifts</small></div>
+              <div class="dash-card"><em>Private Revenue</em><strong>💎 576</strong><small>4 unlocks</small></div>
+            </div>
+            <table class="model-table" style="margin-top:16px;">
+              <thead><tr><th>Action</th><th>Operator %</th><th>Platform %</th><th>Diamonds</th></tr></thead>
+              <tbody>
+                <tr><td>Chat Reward</td><td class="editable-cell">70</td><td>30</td><td>120</td></tr>
+                <tr><td>Gift Received</td><td class="editable-cell">65</td><td>35</td><td>20–188</td></tr>
+                <tr><td>Private Photo</td><td class="editable-cell">75</td><td>25</td><td>89–129</td></tr>
+                <tr><td>Private Video</td><td class="editable-cell">80</td><td>20</td><td>159–199</td></tr>
+                <tr><td>Call Bonus</td><td class="editable-cell">60</td><td>40</td><td>50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: RATING
+          ====================================================== -->
+        <div class="section-panel" id="panel-rating" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Rating</h2>
+              <p>Model performance ratings — unlock, payment, activity, and response ratios.</p>
+            </div>
+            <table class="model-table">
+              <thead><tr><th>Model</th><th>Grade</th><th>Unlock %</th><th>Payment %</th><th>Activity %</th><th>Response %</th><th>Trend</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Zayna</strong></td><td><span class="grade-badge">A+</span></td><td>82</td><td>76</td><td>91</td><td>87</td><td class="trend-up">↑</td></tr>
+                <tr><td><strong>Lina</strong></td><td><span class="grade-badge">A</span></td><td>78</td><td>71</td><td>88</td><td>90</td><td class="trend-up">↑</td></tr>
+                <tr><td><strong>Noor</strong></td><td><span class="grade-badge grade-c">C</span></td><td>61</td><td>68</td><td>69</td><td>71</td><td class="trend-down">↓</td></tr>
+                <tr><td><strong>Maya</strong></td><td><span class="grade-badge grade-b">B+</span></td><td>78</td><td>83</td><td>86</td><td>87</td><td class="trend-up">↑</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ======================================================
+          PANEL: PUBLISH
+          ====================================================== -->
+        <div class="section-panel" id="panel-publish" style="display:none;">
+          <div class="section-panel-inner">
+            <div class="section-hero">
+              <h2>Publish</h2>
+              <p>Deploy configuration changes to LIVE environment.</p>
+            </div>
+            <div class="pipeline-flow-h">
+              <div class="pipe-stage done"><span class="pipe-icon">✓</span><strong>Draft</strong></div>
+              <span class="pipe-arrow">→</span>
+              <div class="pipe-stage done"><span class="pipe-icon">✓</span><strong>Validate</strong></div>
+              <span class="pipe-arrow">→</span>
+              <div class="pipe-stage current"><span class="pipe-icon">◷</span><strong>Stage</strong></div>
+              <span class="pipe-arrow">→</span>
+              <div class="pipe-stage"><span class="pipe-icon">○</span><strong>Deploy</strong></div>
+            </div>
+            <table class="model-table" style="margin-top:20px;">
+              <thead><tr><th>File</th><th>Status</th><th>Version</th><th>Last Modified</th></tr></thead>
+              <tbody>
+                <tr><td class="file-cell">model-config.json</td><td><span class="state-tag valid">Valid ✓</span></td><td>v0.1.0</td><td>2026-06-22 14:30</td></tr>
+                <tr><td class="file-cell">traffic-rules.json</td><td><span class="state-tag empty">Empty</span></td><td>—</td><td>—</td></tr>
+                <tr><td class="file-cell">scheduling-rules.json</td><td><span class="state-tag empty">Empty</span></td><td>—</td><td>—</td></tr>
+                <tr><td class="file-cell">risk-rules.json</td><td><span class="state-tag empty">Empty</span></td><td>—</td><td>—</td></tr>
+                <tr><td class="file-cell">commission-rules.json</td><td><span class="state-tag empty">Empty</span></td><td>—</td><td>—</td></tr>
+                <tr><td class="file-cell">system-constraints.json</td><td><span class="state-tag empty">Empty</span></td><td>—</td><td>—</td></tr>
+              </tbody>
+            </table>
+            <div style="display:flex;gap:8px;margin-top:16px;">
+              <button class="tb-btn primary">Validate All</button>
+              <button class="tb-btn ghost" disabled>Deploy to LIVE</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================
+    // DATA
+    // ============================================================
+    var modelData = {
+      m1: { id:'M100234', name:'Zayna', age:24, city:'Dubai', country:'UAE', grade:'A+', lbs:'Dubai Marina', status:'Published',
+            avatar:'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80',
+            persona:'Warm, playful, loves coffee and late-night chats. Gentle tone, short replies, light emoji usage.',
+            voice:'Soft, caring, light emoji.', tags:'Sweet, Dubai, Warm Chat, Barista, Playful',
+            coverage:'3/4', scheduled:'8h 30m', rateTarget:'95%' },
+      m2: { id:'M100198', name:'Lina', age:26, city:'Riyadh', country:'Saudi Arabia', grade:'A', lbs:'Riyadh Center', status:'Published',
+            avatar:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80',
+            persona:'Mature and calm. Likes music, travel, and quiet calls. Low emoji usage, suitable for VIP care.',
+            voice:'Mature, steady, premium.', tags:'Mature, Riyadh, VIP Care, Music Host, Calm',
+            coverage:'3/4', scheduled:'7h 45m', rateTarget:'91%' },
+      m3: { id:'M100331', name:'Noor', age:23, city:'Doha', country:'Qatar', grade:'C', lbs:'Doha West Bay', status:'Draft',
+            avatar:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+            persona:'Shy but responsive. Short warm answers, ask light questions, avoid hard selling.',
+            voice:'Shy, simple, gentle.', tags:'Shy, Doha, New Match, Student, Gentle',
+            coverage:'1/4', scheduled:'4h 20m', rateTarget:'72%' },
+      m4: { id:'M100276', name:'Maya', age:25, city:'Kuwait City', country:'Kuwait', grade:'B+', lbs:'Salmiya', status:'Published',
+            avatar:'https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=200&q=80',
+            persona:'Confident, stylish, good at private content conversion. Direct but warm tone.',
+            voice:'Confident, direct, warm.', tags:'Confident, Kuwait, Private, Stylist, Direct',
+            coverage:'2/4', scheduled:'6h 40m', rateTarget:'88%' }
+    };
+
+    var assetsData = [
+      { title:'Coffee selfie', type:'Public Photo', model:'Zayna', price:'Free', sent:false, scenario:'Ice breaking', thumb:'https://images.unsplash.com/photo-1512316609839-ce289d3eba0a?auto=format&fit=crop&w=100&q=80' },
+      { title:'Private moment', type:'Private Photo', model:'Zayna', price:'99 coins', sent:true, scenario:'Warm Chat', thumb:'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=100&q=80' },
+      { title:'Short hello video', type:'Private Video', model:'Lina', price:'199 coins', sent:false, scenario:'VIP Care', thumb:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=100&q=80' },
+      { title:'Nice to meet you 😊', type:'Script', model:'Noor', price:'Free', sent:false, scenario:'New Match', thumb:'' },
+      { title:'Evening look', type:'Private Photo', model:'Maya', price:'129 coins', sent:false, scenario:'Private Unlocked', thumb:'https://images.unsplash.com/photo-1524503033411-c9566986fc8f?auto=format&fit=crop&w=100&q=80' },
+    ];
+
+    var sectionMeta = {
+      dashboard:  { title:'Dashboard',  breadcrumb:'Backend Console / Dashboard',  actions:[] },
+      models:     { title:'Models',     breadcrumb:'Backend Console / Models',     actions:['Save Draft','Preview','Publish','+ Add Model'] },
+      persona:    { title:'Persona & LBS', breadcrumb:'Backend Console / Persona & LBS', actions:['Save','+ Add Persona'] },
+      assets:     { title:'Assets',     breadcrumb:'Backend Console / Assets',     actions:['Upload','+ Add Asset'] },
+      operators:  { title:'Operators',  breadcrumb:'Backend Console / Operators',  actions:['+ Add Operator'] },
+      strategy:   { title:'Strategy',   breadcrumb:'Backend Console / Strategy',   actions:['Save','Reset to Default'] },
+      routing:    { title:'Routing',    breadcrumb:'Backend Console / Routing',    actions:['Auto-Normalize','Save'] },
+      income:     { title:'Income',     breadcrumb:'Backend Console / Income',     actions:['Export','Save'] },
+      rating:     { title:'Rating',     breadcrumb:'Backend Console / Rating',     actions:['Recalculate','Export'] },
+      publish:    { title:'Publish',    breadcrumb:'Backend Console / Publish',    actions:['Validate All','Deploy to LIVE'] }
+    };
+
+    // ============================================================
+    // SECTION SWITCHING
+    // ============================================================
+    function switchSection(sectionId, navEl) {
+      // Update nav
+      document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+      if (navEl) navEl.classList.add('active');
+
+      // Update topbar
+      var meta = sectionMeta[sectionId];
+      document.getElementById('topbarTitle').textContent = meta.title;
+      document.getElementById('topbarBreadcrumb').textContent = meta.breadcrumb;
+
+      // Rebuild topbar action buttons
+      var actionsHtml = '';
+      meta.actions.forEach(function(label){
+        var cls = (label === 'Publish' || label === 'Deploy to LIVE' || label === 'Validate All') ? 'primary'
+                : (label.indexOf('+') === 0) ? 'accent'
+                : 'ghost';
+        actionsHtml += '<button class="tb-btn '+cls+'">'+label+'</button>';
+      });
+      document.getElementById('topbarActions').innerHTML = actionsHtml;
+
+      // Show/hide section panels
+      document.querySelectorAll('.section-panel').forEach(function(p){ p.classList.remove('active'); p.style.display = 'none'; });
+      var panel = document.getElementById('panel-' + sectionId);
+      if (panel) { panel.classList.add('active'); panel.style.display = ''; }
+
+      // Populate dynamic tables when switching to those sections
+      if (sectionId === 'persona') renderPersonaTable();
+      if (sectionId === 'assets') renderAssetTable();
+    }
+
+    // ============================================================
+    // MODEL TABLE ROW SELECTION
+    // ============================================================
+    function selectModelRow(tr) {
+      document.querySelectorAll('.model-table-row').forEach(function(r){ r.classList.remove('selected'); });
+      tr.classList.add('selected');
+
+      var key = tr.dataset.model;
+      var m = modelData[key];
+      if (!m) return;
+
+      document.getElementById('detailPlaceholder').style.display = 'none';
+      document.getElementById('detailContent').style.display = 'block';
+      document.getElementById('detailAvatar').src = m.avatar;
+      document.getElementById('detailName').textContent = m.name + ', ' + m.age;
+      document.getElementById('detailLocation').textContent = m.city + ', ' + m.country + ' · ' + m.lbs;
+      var st = document.getElementById('detailStatus');
+      st.textContent = m.status;
+      st.className = 'status-badge ' + (m.status === 'Published' ? 'published' : 'draft');
+
+      document.getElementById('fieldId').value = m.id;
+      document.getElementById('fieldName').value = m.name;
+      document.getElementById('fieldAge').value = m.age;
+      document.getElementById('fieldGrade').value = m.grade;
+      document.getElementById('fieldCountry').value = m.country;
+      document.getElementById('fieldCity').value = m.city;
+      document.getElementById('fieldAvatar').value = m.avatar;
+      document.getElementById('fieldPersona').value = m.persona;
+      document.getElementById('fieldVoice').value = m.voice;
+      document.getElementById('fieldTags').value = m.tags;
+      document.getElementById('fieldCoverage').value = m.coverage;
+      document.getElementById('fieldScheduled').value = m.scheduled;
+      document.getElementById('fieldRateTarget').value = m.rateTarget;
+
+      // Render assets for this model
+      var modelAssets = assetsData.filter(function(a){ return a.model === m.name; });
+      document.getElementById('assetMiniList').innerHTML = modelAssets.map(function(a){
+        return '<div class="asset-mini-row"><span class="asset-type '+ (a.type.indexOf('Private')===0 ? 'private' : a.type.indexOf('Video')>=0 ? 'video' : 'photo') +'">'+a.type+'</span><span class="asset-name">'+a.title+'</span><span class="asset-price">'+a.price+'</span></div>';
+      }).join('') || '<div style="font-size:12px;color:var(--text-3);padding:8px;">No assets for this model.</div>';
+    }
+
+    function switchDetailTab(btn, tabName) {
+      document.querySelectorAll('.detail-tab').forEach(function(t){ t.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.detail-tab-content').forEach(function(c){ c.classList.remove('active'); });
+      document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    // ============================================================
+    // DYNAMIC TABLE RENDERERS
+    // ============================================================
+    function renderPersonaTable() {
+      var keys = Object.keys(modelData);
+      document.getElementById('personaTableBody').innerHTML = keys.map(function(k){
+        var m = modelData[k];
+        return '<tr>'+
+          '<td><div class="model-cell"><img class="model-cell-avatar" src="'+m.avatar+'" /><div class="model-cell-info"><strong>'+m.name+'</strong></div></div></td>'+
+          '<td><span class="persona-text">'+m.persona+'</span></td>'+
+          '<td><span style="font-size:12px;color:var(--text-2);">'+m.voice+'</span></td>'+
+          '<td><span class="lbs-tag">'+m.lbs+'</span></td>'+
+          '<td><span style="font-size:11px;color:var(--text-2);">'+m.tags+'</span></td>'+
+          '<td><button class="edit-btn">Edit</button></td>'+
+        '</tr>';
+      }).join('');
+    }
+
+    function renderAssetTable() {
+      document.getElementById('assetTableBody').innerHTML = assetsData.map(function(a){
+        var typeCls = a.type.indexOf('Private')===0 ? 'private' : a.type.indexOf('Video')>=0 ? 'video' : 'photo';
+        return '<tr>'+
+          '<td>'+(a.thumb ? '<img src="'+a.thumb+'" style="width:36px;height:36px;border-radius:6px;object-fit:cover;" />' : '<span style="font-size:18px;">📝</span>')+'</td>'+
+          '<td><strong style="font-size:13px;">'+a.title+'</strong></td>'+
+          '<td><span class="asset-type '+typeCls+'">'+a.type+'</span></td>'+
+          '<td>'+a.model+'</td>'+
+          '<td><strong style="font-size:12px;">'+a.price+'</strong></td>'+
+          '<td>'+(a.sent ? '<span class="status-badge published">Sent</span>' : '<span class="status-badge draft">Unsent</span>')+'</td>'+
+          '<td><span style="font-size:11px;color:var(--text-2);">'+a.scenario+'</span></td>'+
+        '</tr>';
+      }).join('');
+    }
+  </script>
+
+</body>
+</html>
